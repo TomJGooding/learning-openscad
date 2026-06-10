@@ -63,9 +63,14 @@ difference() {
     // Hollow inside
     rounded_cube([box_w-(wall_d*2), box_d-(wall_d*2), (lid_h*2)-(wall_d*2)], cnr_r);
 
-    // FIXME: Ledge
-    #translate([0, 0, -wall_d]) {
-        linear_extrude(wall_d+eps)
-            rounded_square([box_w+eps, box_d+eps], cnr_r);
+    // Ledge inverted
+    translate([0, 0, -wall_d]) {
+        difference() {
+            linear_extrude(lid_h)
+                rounded_square([box_w+eps, box_d+eps], cnr_r);
+            translate([0, 0, -eps])
+                linear_extrude(lid_h+(eps*2))
+                    rounded_square([box_w-wall_d, box_d-wall_d], cnr_r);
+        }
     }
 }
